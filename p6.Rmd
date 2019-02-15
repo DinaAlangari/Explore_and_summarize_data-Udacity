@@ -1,0 +1,485 @@
+---
+title: "Explore and summarize data"
+author: "Dina"
+date: "1/15/2019"
+output: html_document
+---
+
+========================================================
+
+#introduction
+
+Explore and summarize data is a projects that explores red wine,
+and it contains 1599 observations and 13 variables.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+
+library(ggplot2)
+library(gridExtra)
+
+# knitr: Suppress code/messages/warnings 
+#        Set default plot options and center them
+knitr::opts_chunk$set(fig.width=9,fig.height=5,fig.path='Figs/',
+                      fig.align='center',tidy=TRUE,
+                      echo=FALSE,warning=FALSE,message=FALSE)
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Load the Data
+rwdata <- read.csv("wineQualityReds.csv")
+```
+
+```{r echo=FALSE}
+names(rwdata )
+summary(rwdata )
+```
+
+First loading the Data and showing the names of the variables "coulomns"
+and showing the statistical calculation. 
+
+# Univariate Plots Section
+
+
+```{r echo=FALSE}
+
+ggplot(data = rwdata, aes(factor(quality), fill = quality)) +
+  geom_bar() +
+  theme_replace() +
+  xlab("Quality") + ylab("Count")
+
+summary(rwdata$quality)
+
+```
+
+The chart is normally distributed and the mean equals 5.636 , also i summarized 
+the data to make sure the chart is correct.
+
+```{r echo=FALSE}
+ggplot(aes(x=fixed.acidity),data=rwdata) +
+  geom_histogram( color = "Black" , fill="Red",binwidth=1)
+
+qplot(x = fixed.acidity, data = rwdata, binwidth = 1, geom = "freqpoly",
+      color= I("Red"))
+
+```
+
+As we can see the fixed acidity is skewed to the right.
+
+```{r echo=FALSE}
+
+# Histogram - volatile acidity 
+ggplot(aes(x=volatile.acidity),data=rwdata) +
+  geom_histogram( color = "Black" , fill="Red" ,binwidth=0.05) 
+
+# Density Plot - volatile acidity
+qplot(x = volatile.acidity, data = rwdata, binwidth = 0.05, geom = "freqpoly",
+      color= I("Red"))
+
+```
+
+As we can see the volatile acidity is skewed to the right.
+
+
+```{r echo=FALSE}
+
+# Histogram - citric acid
+ggplot(aes(x=citric.acid),data=rwdata) +
+  geom_histogram(color = "Black" , fill="Red", binwidth=0.05) 
+
+# Density Plot - citric acid
+qplot(x = citric.acid, data = rwdata, binwidth = 0.05, geom = "freqpoly" ,
+      color= I("Red"))
+
+```
+
+As we can see the citrid Acid isn't normal distributed.
+
+```{r echo=FALSE}
+
+# Histogram - residual sugar
+ggplot(aes(x=residual.sugar),data=rwdata) + 
+              coord_cartesian(xlim = c(0,6)) +
+  geom_histogram( color = "Black" , fill="Red",binwidth=0.5) 
+
+# Density Plot - residual sugar
+qplot(x = residual.sugar, data = rwdata, binwidth = 0.5, geom = "freqpoly",
+      color= I("Red")) +
+  coord_cartesian(xlim = c(0,6))
+
+```
+
+As we can see also the residual sugar is skewed to the right.
+
+```{r echo=FALSE}
+
+# Histogram - chlorides
+ggplot(aes(x=chlorides),data=rwdata) + 
+                coord_cartesian(xlim = c(0,0.20)) +
+  geom_histogram( color = "Black" , fill="Red" ,binwidth=0.01) 
+
+# Density Plot - chlorides
+qplot(x = chlorides, data = rwdata, binwidth = 0.01, geom = "freqpoly",
+      color= I("Red")) +
+  coord_cartesian(xlim = c(0,0.20))
+
+```
+
+As we can see also the chlorides is skewed to the right.
+
+
+```{r echo=FALSE}
+
+# Histogram - free.sulfur.dioxide
+ggplot(aes(x=free.sulfur.dioxide),data=rwdata) +
+  geom_histogram( color = "Black" , fill="Red" , binwidth=5)  
+
+# Density Plot - free.sulfur.dioxide
+qplot(x = free.sulfur.dioxide, data = rwdata, binwidth = 5, geom = "freqpoly" ,
+      color= I("Red"))
+
+```
+
+Also the free sulfur dioxide is skewed to the right.
+
+
+```{r echo=FALSE}
+
+# Histogram - total.sulfur.dioxide
+ggplot(aes(x=total.sulfur.dioxide),data=rwdata) +
+  geom_histogram(color = "Black" , fill="Red", binwidth=10) 
+  
+# Density Plot - total.sulfur.dioxide
+qplot(x = total.sulfur.dioxide, data = rwdata, binwidth = 10, geom = "freqpoly",
+      color= I("Red"))
+
+```
+
+Also the total sulfur dioxide is skewed to the right.
+
+```{r echo=FALSE}
+
+# Histogram - density
+ggplot(aes(x=density),data=rwdata) +
+  geom_histogram(color = "Black" , fill="Red", binwidth=0.001)
+
+# Density Plot - density
+qplot(x = density, data = rwdata, binwidth = 0.001, geom = "freqpoly",
+      color= I("Red"))
+
+```
+
+As we can see the density is normally distributed.
+
+```{r echo=FALSE}
+
+# Histogram - pH
+ggplot(aes(x=pH),data=rwdata) +
+  geom_histogram(color = "Black" , fill="Red",  binwidth=0.1) 
+
+# Density Plot - pH
+qplot(x = pH, data = rwdata, binwidth = 0.1, geom = "freqpoly",
+      color= I("Red"))
+
+```
+
+Also the PH is normally distributed.
+
+
+```{r echo=FALSE}
+
+# Histogram - sulphates
+ggplot(aes(x=sulphates),data=rwdata) +
+  coord_cartesian(xlim = c(0,1.5)) +
+  geom_histogram(color = "Black" , fill="Red",  binwidth=0.1) 
+
+# Density Plot - sulphates
+qplot(x = sulphates, data = rwdata, binwidth = 0.1, geom = "freqpoly",
+      color= I("Red")) +
+  coord_cartesian(xlim = c(0,1.5))
+
+```
+
+Also the sulphates is skewed to the right.
+
+```{r echo=FALSE}
+
+# Histogram - alcohol
+ggplot(aes(x=alcohol),data=rwdata) +
+  geom_histogram( color = "Black" , fill="Red",binwidth=0.5) 
+
+# Density Plot - alcohol
+qplot(x = alcohol, data = rwdata, binwidth = 0.5, geom = "freqpoly",
+      color= I("Red"))
+```
+
+Also the alcohol is skewed to the right.
+
+
+```{r echo=FALSE}
+
+rwdata$alcohol.Quality <- ifelse (rwdata$quality <5, 'low' , ifelse(
+  rwdata$quality < 7 ,'Medium', 'excellent'))
+rwdata$alcohol.Quality <- ordered (rwdata$alcohol.Quality ,
+                                   levels=c('low','Medium','excellent'))
+
+    ggplot(rwdata, aes(alcohol.Quality)) +
+    geom_bar( fill = "#993366") 
+
+```
+
+the above chart is about the new variable that i created that calculates the quality of the alcohol which is alcohol.Quality whether the level is low or medium or excellent, from the chart it seems that the medium has the highest wine count. 
+
+```{r}
+str(rwdata)
+```
+
+
+# Univariate Analysis
+
+
+### What is the structure of your dataset?
+my data set contains 1599 aboservation and 13 variables + 1 varialbles that i created.
+so i have 14 variables.
+
+### What is/are the main feature(s) of interest in your dataset?
+
+the main feature(s) of my dataset is Quality of the alcohol.
+
+### What other features in the dataset do you think will help support your \investigation into your feature(s) of interest?
+
+sulphates and PH.
+
+### Did you create any new variables from existing variables in the dataset?
+
+i create alcohol.Quality. 
+
+### Of the features you investigated, were there any unusual distributions? \Did you perform any operations on the data to tidy, adjust, or change the form \ of the data? If so, why did you do this?
+
+No , there isn't any unusual distribution
+
+
+# Bivariate Plots Section
+
+
+First i will start with scatter plot.
+
+```{r echo=FALSE}
+
+
+ggplot(rwdata ,aes(x= fixed.acidity, y = citric.acid) ) +
+  geom_point(alpha = 1/5) +
+  geom_smooth(method = "glm", se = FALSE) 
+
+```
+
+The relationship between the citrid Acid and Fixed Acidity is positive.
+the higher citrid Acid is the higher fixed acidity.
+
+```{r echo=FALSE}
+
+ggplot(rwdata ,aes(x= fixed.acidity, y = density) ) +
+  geom_point(alpha = 1/5) +
+  geom_smooth(method = "glm", se = FALSE)
+
+```
+
+The relationship between the density and Fixed Acidity is positive.
+the higher density is the higher fixed acidity.
+
+
+```{r echo=FALSE}
+
+ggplot(rwdata ,aes(x= pH, y = fixed.acidity) ) +
+  geom_point(alpha = 1/5) +
+  geom_smooth(method = "glm", se = FALSE) 
+
+```
+
+The relationship between the PH and Fixed Acidity is negative.
+the lower PH gets the lower fixed acidity.
+
+
+```{r echo=FALSE}
+ggplot(rwdata , aes(x= total.sulfur.dioxide, y = free.sulfur.dioxide) ) +
+  geom_point(alpha = 1/5) +
+  geom_smooth(method = "glm", se = FALSE)
+
+```
+
+The relationship between the total sulfur dioxide and free sulfur dioxide is positive.
+the higher total sulfur dioxide is the higher free sulfur dioxide.
+
+
+
+```{r echo=FALSE}
+
+
+ggplot(aes(x = alcohol.Quality, y = density), 
+       data = rwdata) +
+  geom_jitter( alpha = 0.3)  +
+  geom_boxplot( alpha = 0.5,color = 'Red')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
+
+```
+
+
+The box plot shows that the wine with the excellent quality has the lowest meadian density.
+
+
+```{r echo=FALSE}
+
+ggplot(aes(x = alcohol.Quality, y = alcohol),
+       data = rwdata) +
+  geom_jitter( alpha = 0.3)  +
+  geom_boxplot( alpha = 0.5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
+
+```
+
+The box plot shows that the wine with the excellent quality has the highest meadian alcohol.
+
+
+
+# Bivariate Analysis
+
+
+### Talk about some of the relationships you observed in this part of the \investigation. How did the feature(s) of interest vary with other features in \ the dataset?
+
+positive relationship:
+
+citrid Acid and Fixed Acidity 
+density and Fixed Acidity
+total sulfur dioxide and free sulfur dioxide
+
+negative relationship:
+
+PH and Fixed Acidity 
+
+
+### Did you observe any interesting relationships between the other features \(not the main feature(s) of interest)?
+
+PH and density and residual sugar and density.
+
+### What was the strongest relationship you found?
+
+density and Fixed Acidity the strongest relationship.
+
+
+# Multivariate Plots Section
+
+```{r echo=FALSE}
+ggplot( data = rwdata ,aes(x = alcohol, y = citric.acid, color = factor(quality))) +
+      geom_point(alpha = 1/5) +
+      geom_smooth(method = "glm", se = FALSE)  +
+      theme_dark() +
+      scale_color_brewer( guide=guide_legend(title='Quality'))
+
+```
+
+```{r echo=FALSE}
+
+ggplot(data = rwdata, aes(x = volatile.acidity, y = residual.sugar, color = factor(quality)) ) +
+      geom_point(alpha = 1/5) +
+      geom_smooth(method = "glm", se = FALSE)  +
+      theme_dark() +
+      scale_color_brewer( guide=guide_legend(title='Quality'))
+
+```
+
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the \investigation. Were there features that strengthened each other in terms of \looking at your feature(s) of interest?
+
+From the previous graphs i see that Alcohol and residual.sugar are important for the quality of the wine.
+
+### Were there any interesting or surprising interactions between features?
+
+Alcohol and citric.acid.
+
+------
+
+# Final Plots and Summary
+
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+# Histogram - Quality
+ggplot(data = rwdata, aes(factor(quality), fill = quality)) +
+  geom_bar() +
+  theme_replace() +
+  ggtitle("wines Quality ") +xlab("Quality") + ylab("Count")+
+  guides(fill=FALSE)
+  
+```
+
+### Description One
+
+the histogram shows that good quality represent 80% from the wine and the chart is normally distributed around 5- 6.
+
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+# Histogram - Alcohol
+grid.arrange( ggplot(aes(x=alcohol),data=rwdata) +
+  geom_histogram( color = "Black" , fill="Red",binwidth=0.5)  +
+  ggtitle("wines Alcohol ") +xlab("Alcohol") + ylab("Count") )
+summary(rwdata$alcohol)
+
+```
+
+### Description Two
+
+The histogram shows that the chart is skewed to the right and the mean value is 10.42
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+
+ggplot(aes(x = alcohol.Quality, y = density), 
+       data = rwdata) +
+  geom_jitter( alpha = 0.3)  +
+  geom_boxplot( alpha = 0.5,color = 'Red')+
+  ggtitle("Distribution of Density, by Wine Quality") +
+  xlab("Wine Quality") +
+  ylab(expression(Density~(g/cm^{3})))
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
+
+
+```
+
+### Description Three
+
+The boxplot shows that the excellent quality of wine has the lowest meadian density.
+
+------
+
+# Reflection
+
+
+in the explore and summarize data project i am working with R language and this is 
+my first time programming using it, it is easy to undurstand but slightly tricky 
+you need to be carefull.
+overall it was a good experience learning a new things and immeditly working with it
+within a project like this.
+
+this dataset contains 1599 abservation of 14 variables, step by step i realized that the concentration of the alcohol is related with the quality and the density 
+so i created a new variable called alcoholQuality to measure the levels of 
+the wine quality also i created it beacause i figured that the quality 
+is all about the product which is the wine.
+i hope i will be more analysing deeply about the quality and the affect of 
+other chemical variables  and the statistical in the near future.
+
+
